@@ -17,6 +17,15 @@ var svgImportLayer = 1;
 var unknownCommandFlag = false;
 var svgImportUnitsSet = false;
 
+function isRunnerAround() {
+    const hasRunnerInstance = easyeda && easyeda.extension && easyeda.extension.instances && easyeda.extension.instances.runner;
+    if(!hasRunnerInstance) {
+        return false;
+    }
+
+    return easyeda.extension.instances.runner.enabled;
+}
+
 var dlg = api('createDialog', {
 	title: "SVG Import",
     content : `
@@ -126,6 +135,7 @@ var aboutdlg = api('createDialog', {
 });
 
 
+
 api('createCommand', {
 	'extension-svgimport-import' : () => {
         doImport();
@@ -168,35 +178,38 @@ api('createCommand', {
     }
 });
 
-api('createToolbarButton', {
-	icon: api('getRes', {file:'icon.svg'}),
-	title:'SVG Import',
-	fordoctype:'pcb',
-	menu:[
-		{
-			text:"Open Import Dialog", 
-			cmd:"extension-svgimport-open", 
-			title:'Open Import Dialog',
-			icon: api('getRes', {file:'icon.svg'})
-        },
-        {
-			text:"Import file ...", 
-			cmd:"extension-svgimport-openfile", 
-			title:'Import file ...'
-        },
-        {},
-        {
-			text:"Visit GitHub page", 
-			cmd:"extension-svgimport-github", 
-            title:'Visit GitHub page'
-		},
-        {
-			text:"About", 
-			cmd:"extension-svgimport-about", 
-            title:'About'
-		}
-	]
-});
+if(!isRunnerAround()) {
+    api('createToolbarButton', {
+        icon: api('getRes', {file:'icon.svg'}),
+        title:'SVG Import',
+        fordoctype:'pcb',
+        menu:[
+            {
+                text:"Open Import Dialog", 
+                cmd:"extension-svgimport-open", 
+                title:'Open Import Dialog',
+                icon: api('getRes', {file:'icon.svg'})
+            },
+            {
+                text:"Import file ...", 
+                cmd:"extension-svgimport-openfile", 
+                title:'Import file ...'
+            },
+            {},
+            {
+                text:"Visit GitHub page", 
+                cmd:"extension-svgimport-github", 
+                title:'Visit GitHub page'
+            },
+            {
+                text:"About", 
+                cmd:"extension-svgimport-about", 
+                title:'About'
+            }
+        ]
+    });
+}
+
 
 function initUnits() {
     if(svgImportUnitsSet) return;

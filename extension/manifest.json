@@ -1,12 +1,36 @@
 {
 	"name": "SVG Import",
+	"id": "svgimport",
 	"description": "Import SVG paths into PCB",
-	"version": "1.5",
+	"version": "1.5.1",
 	"homepage": "https://github.com/xsrf/easyeda-svg-import",
 	"author": "Andreas Bernhofer",
 	"icons": {
 		"default": "ext-icon.svg"
 	},
 	"locale": "locale.txt",
-	"scripts": [ "paper-full.min.js","main.js" ]
+	"scripts": [ "paper-full.min.js","main.js" ],
+	"menu": {
+		"title": "SVG Import",
+		"scope": "pcb",
+		"menu": [
+			{
+				"title": "Open Import Dialog",
+				"command": "extension-svgimport-open"
+			},
+			{
+				"title": "Import file ...",
+				"command": "extension-svgimport-openfile"
+			},
+			"-",
+			{
+				"title": "Visit GitHub page",
+				"command": "extension-svgimport-github"
+			},
+			{
+				"title": "About",
+				"command": "extension-svgimport-about"
+			}
+		]
+	}
 }
